@@ -175,7 +175,7 @@ for i=1:length(r)
     % h(i,2)=trisurf(k,Slopes_true(r{i},1),Slopes_true(r{i},2),Slopes_true(r{i},3),'Facecolor',colors(i,:),'FaceAlpha',0.1);
 end
 grid on
-legend(h(:,1),{'s','m','n'})
+legend(h(:,1),{'s','m','n','none'})
 xlabel('Slope RR','FontWeight' ,'bold')
 ylabel('Slope PP','FontWeight' ,'bold')
 zlabel('Slope SC','FontWeight' ,'bold')
@@ -189,7 +189,7 @@ for i=1:length(Out)
 end
 
 figure()
-colors = [[0.4940 -1.816 0.5560]; [0.9290 0.6940 0.1250]; [0.8500 0.3250 0.0980];[0.6350 0.0780 0.1840];[0 0.4470 0.7410];[0 0.4470 0.7410];[0 0.4470 0.7410]];
+colors = [[0.4940 0.1840 0.5560]; [0.9290 0.6940 0.1250]; [0.8500 0.3250 0.0980];[0.6350 0.0780 0.1840];[0 0.4470 0.7410];[0 0.4470 0.7410];[0 0.4470 0.7410]];
 for i=1:length(r)
     k = boundary(Slopes_true(r{i},1),Slopes_true(r{i},2),Slopes_true(r{i},3));
     h(i,1)=trisurf(k,Slopes_true(r{i},1),Slopes_true(r{i},2),Slopes_true(r{i},3),'Facecolor',colors(i,:),'FaceAlpha',0.1);

@@ -75,6 +75,8 @@ MAT_POST(:,1:2:end) = MAT_POST_DISP;
 
 save('Matrixes_pre_post','MAT_POST','MAT_PRE','NAMES_POST')
 %%
+plotResultsDistribution(MAT_PRE,MAT_POST,'s')
+
 %Image
 % -b1.1 (1,2)
 % -sad (3,4)
@@ -92,5 +94,54 @@ save('Matrixes_pre_post','MAT_POST','MAT_PRE','NAMES_POST')
 % -happy (23,24)
 % -fear (25,26)
 
-plotResultsDistribution(MAT_PRE,MAT_POST,'s')
 
+%% Create voting system
+
+[names,inx] = sort(string(POST.POST2));
+ind = [3 4 19 20 7 8 21 22 11 12 23 24 15 16 25 26];
+for i =1:length(ind)
+    votes(:,i) =MAT_POST(:,ind(i));
+end
+
+%sad
+votes_sad = zeros(29,2);
+votes_sad((votes(:,[1 3])== -1 & votes(:,[2 4])== -1))= 5;
+votes_sad((votes(:,[1 3])== -0.5 & votes(:,[2 4])== -0.5))= 3;
+votes_sad((votes(:,[1 3])== -1 & votes(:,[2 4])== -0.5)|(votes(:,[1 3])== -0.5 & votes(:,[2 4])== -1))= 4;
+votes_sad((votes(:,[1 3])== -1 & votes(:,[2 4])== 0)|(votes(:,[1 3])== 0 & votes(:,[2 4])== -1))= 2;
+votes_sad((votes(:,[1 3])== -0.5 & votes(:,[2 4])== 0)|(votes(:,[1 3])== 0 & votes(:,[2 4])== -0.5))= 1;
+%relax
+votes_relax = zeros(29,2);
+votes_relax(votes(:,[5 7])== 1 & votes(:,[6 8])== -1)= 5;
+votes_relax(votes(:,[5 7])== 0.5 & votes(:,[6 8])== -0.5)= 3;
+votes_relax((votes(:,[5 7])== 1 & votes(:,[6 8])== -0.5)|(votes(:,[5 7])== 0.5 & votes(:,[6 8])== -1))= 4;
+votes_relax((votes(:,[5 7])== 1 & votes(:,[6 8])== 0)|(votes(:,[5 7])== 0 & votes(:,[6 8])== -1))= 2;
+votes_relax((votes(:,[5 7])== 0.5 & votes(:,[6 8])== 0)|(votes(:,[5 7])== 0 & votes(:,[6 8])== -0.5))= 1;
+%happy
+votes_happy = zeros(29,2);
+votes_happy((votes(:,[9 11])== 1 & votes(:,[10 12])== 1))= 5;
+votes_happy((votes(:,[9 11])== 0.5 & votes(:,[10 12])== 0.5))= 3;
+votes_happy((votes(:,[9 11])== 1 & votes(:,[10 12])== 0.5)|(votes(:,[9 11])== 0.5 & votes(:,[10 12])== 1))= 4;
+votes_happy((votes(:,[9 11])== 1 & votes(:,[10 12])== 0)|(votes(:,[9 11])== 0 & votes(:,[10 12])== 1))= 2;
+votes_happy((votes(:,[9 11])== 0.5 & votes(:,[10 12])== 0)|(votes(:,[9 11])== 0 & votes(:,[10 12])== 0.5))= 1;
+%fear
+votes_fear = zeros(29,2);
+votes_fear(votes(:,[13 15])== -1 & votes(:,[14 16])== 1)= 5;
+votes_fear(votes(:,[13 15])== -0.5 & votes(:,[14 16])== 0.5)= 3;
+votes_fear((votes(:,[13 15])== -1 & votes(:,[14 16])== 0.5)|(votes(:,[13 15])== -0.5 & votes(:,[14 16])== 1))= 4;
+votes_fear((votes(:,[13 15])== -1 & votes(:,[14 16])== 0)|(votes(:,[13 15])== 0 & votes(:,[14 16])== 1))= 2;
+votes_fear((votes(:,[13 15])== -0.5 & votes(:,[14 16])== 0)|(votes(:,[13 15])== 0 & votes(:,[14 16])== 0.5))= 1;
+
+votes_sad = sum(votes_sad,2);
+votes_relax = sum(votes_relax,2);
+votes_happy = sum(votes_happy,2);
+votes_fear = sum(votes_fear,2);
+
+votes_sad = votes_sad(inx);
+votes_relax = votes_relax(inx);
+votes_happy = votes_happy(inx);
+votes_fear = votes_fear(inx);
+
+vote_tab = table(names,votes_sad,votes_relax,votes_happy,votes_fear);
+
+%save('votes_choer','votes_sad','votes_relax','votes_happy','votes_fear','vote_tab')
