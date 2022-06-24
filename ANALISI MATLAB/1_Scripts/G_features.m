@@ -124,8 +124,8 @@ for k=1:size(subjects,2)
             
         end
         
-
-
+        
+        
         %PP & PAT features
         j=0;
         for i=4:5:size(times,1)
@@ -140,7 +140,9 @@ for k=1:size(subjects,2)
             dias_amp=data2.annotations(7,samples);
             
             PulsePulse.(phase{j,:}) = av_PulsePulse(sys_ann);
+            
             [PP.(phase{j,:}).avg_pp ,PP.(phase{j,:}).slope,PP.(phase{j,:}).var]= avpp(sys_ann,dias_ann,sys_amp,dias_amp);
+            
             PAT.nno.(phase{j,:})=pat(onset,ecg_samples,2048,'nn');
             PAT.no.(phase{j,:})=pat(onset,ecg_samples,2048,'n');
             PAT.nns.(phase{j,:})=pat(sys_ann,ecg_samples,2048,'nn');
@@ -204,8 +206,8 @@ for k=1:size(subjects,2)
             POINT.(phase{j,:}).bal=mean(F_RR.PP.Mono.RR.bal(samples));
             POINT.(phase{j,:}).vlf=mean(F_RR.PP.Mono.RR.powVLF(samples));
             POINT.(phase{j,:}).tot=mean(F_RR.PP.Mono.RR.powTot(samples));
-%             POINT.(phase{j,:}).lfn=mean(F_RR.PP.Mono.RR.powLF(samples)./(F_RR.PP.Mono.RR.powTot(samples)-F_RR.PP.Mono.RR.powVLF(samples)));
-%             POINT.(phase{j,:}).hfn=mean(F_RR.PP.Mono.RR.powHF(samples)./(F_RR.PP.Mono.RR.powTot(samples)-F_RR.PP.Mono.RR.powVLF(samples)));
+            %             POINT.(phase{j,:}).lfn=mean(F_RR.PP.Mono.RR.powLF(samples)./(F_RR.PP.Mono.RR.powTot(samples)-F_RR.PP.Mono.RR.powVLF(samples)));
+            %             POINT.(phase{j,:}).hfn=mean(F_RR.PP.Mono.RR.powHF(samples)./(F_RR.PP.Mono.RR.powTot(samples)-F_RR.PP.Mono.RR.powVLF(samples)));
             POINT.(phase{j,:}).lfn=mean(F_RR.PP.Mono.RR.powLF(samples)./(F_RR.PP.Mono.RR.powLF(samples)+F_RR.PP.Mono.RR.powHF(samples)));
             POINT.(phase{j,:}).hfn=mean(F_RR.PP.Mono.RR.powHF(samples)./(F_RR.PP.Mono.RR.powLF(samples)-F_RR.PP.Mono.RR.powHF(samples)));
             
@@ -217,7 +219,7 @@ for k=1:size(subjects,2)
             j=j+1;
             eval(['samples' '=' times{i,:} ';']);
             [~,~,~,GSR.(phase{j,:}).avg_amp_peaks,GSR.(phase{j,:}).avg_rise_time,GSR.(phase{j,:}).avg_rec_time,GSR.(phase{j,:}).n_peaks,GSR.(phase{j,:}).sd_amp_peaks]=feat_sc(sc(samples),8,sc_phasic(samples),1);
-            [~,~,GSR.(phase{j,:}).max_sign_amp_gsrbp,GSR.(phase{j,:}).avg_der_gsrbp,GSR.(phase{j,:}).sd_der_gsrbp,GSR.(phase{j,:}).max_der_gsrbp]=gsrbp2(sc_bp(samples));
+            [~,GSR.(phase{j,:}).max_sign_amp_gsrbp,GSR.(phase{j,:}).avg_der_gsrbp,GSR.(phase{j,:}).sd_der_gsrbp,GSR.(phase{j,:}).max_der_gsrbp]=gsrbp2(sc_bp(samples));
             [GSR.(phase{j,:}).slope_gsr,~,~,~,~]=gsrbp2(sc(samples));
             [GSR.(phase{j,:}).avg,GSR.(phase{j,:}).sd,GSR.(phase{j,:}).avg_abs1,GSR.(phase{j,:}).avg_abs1_norm,GSR.(phase{j,:}).avg_abs2,GSR.(phase{j,:}).avg_abs2_norm]=Picard(sc(samples));
             [GSR.(phase{j,:}).env,~,~]=envel(sc_phasic(samples));
@@ -231,6 +233,8 @@ for k=1:size(subjects,2)
             
             SerieResp=CreaSerieResp(time_resp,resp(samples));
             RESP.(phase{j,:}).f_resp=size(SerieResp,1)/5;
+            
+
         end
         
         
@@ -242,7 +246,5 @@ for k=1:size(subjects,2)
         
     end
 end
-
-
 
 
