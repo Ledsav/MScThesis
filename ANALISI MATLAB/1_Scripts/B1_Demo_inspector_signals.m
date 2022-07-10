@@ -166,8 +166,8 @@ for i = 1:length(code_list_var)
         time_ppg=procomp.data(2:end,1);
         ppg=procomp.data(2:end,3);
         
-        time_resp=downsample(procomp.data(2:end,1),8);
-        resp= downsample(procomp.data(2:end,5),8);
+        time_resp=downsample(procomp.data(2:end,1),1024);
+        resp= downsample(procomp.data(2:end,5),1024);
         
         
         for k=1:8
@@ -183,14 +183,14 @@ for i = 1:length(code_list_var)
             spRESP{i,k} =spectrum_resp(1:floor(length(spectrum_resp)/2));
             pw_resp{i,k} = trapz(spRESP{i,k});
             
-%             plot(linspace(1,2048/2,length(spPPG{i,k})),spPPG{i,k})
-%             hold on
-%             plot(linspace(1,256/2,length(spRESP{i,k})),spRESP{i,k})
-%             title('PSD RESP and PPG')
-%             xlabel('Frequency (Hz)')
-%             ylabel('Power')
-%             legend({'RESP' 'PPG'})
-%             xlim([0 10])
+            plot(linspace(0,2048/2,length(spPPG{i,k})),spPPG{i,k})
+            hold on
+            plot(linspace(0,2/2,length(spRESP{i,k})),spRESP{i,k})
+            title('PSD RESP and PPG')
+            xlabel('Frequency (Hz)')
+            ylabel('Power')
+            legend({'PPG' 'RESP'})
+            xlim([0 10])
             
             
         end
@@ -198,10 +198,25 @@ for i = 1:length(code_list_var)
     end
 end
 
-save('PPG_RESP_psd','spPPG','pw_ppg','spRESP','pw_resp')
+save('PPG_RESP_psd_2Hz','spPPG','pw_ppg','spRESP','pw_resp')
+
+figure()
+boxplot(cell2mat(pw_resp))
+xticks([1 2 3 4 5 6 7 8])
+xticklabels({'B1','Sadnass','B2','Realx','B3','Happyness','B4','Fear'})
+ylabel('Power')
+title('Total Power PPG')
 
 
-
+figure()
+plot(linspace(0,2048/2,length(spPPG{1,1})),spPPG{1,8})
+hold on
+plot(linspace(0,256/2,length(spRESP{1,1})),spRESP{1,8})
+title('PSD RESP and PPG fear')
+xlabel('Frequency (Hz)')
+ylabel('Power')
+legend({'PPG' 'RESP'})
+xlim([0 5])
 %% extraction of phasic resp
 clc,clear,close
 

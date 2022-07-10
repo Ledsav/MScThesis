@@ -7,6 +7,7 @@ clc
 
 
 [~ ,~ ,PRE] = xlsread('PRE.xlsx');
+
 PRE(1,:)=[];
 PRE = cell2table(PRE);
 PRE = PRE(:,1:43);
@@ -15,7 +16,6 @@ PRE = PRE(:,1:43);
 POST(1,:)=[];
 POST = cell2table(POST);
 POST = POST(:,1:43);
-
 siz_pre = size(PRE);
 siz_post = size(POST);
 %% Analisi SAM
@@ -73,9 +73,10 @@ MAT_POST_DISP(MAT_POST_DISP == 5) = 2/2;
 MAT_POST(:,2:2:end) = MAT_POST_PARI;
 MAT_POST(:,1:2:end) = MAT_POST_DISP;
 
-save('Matrixes_pre_post','MAT_POST','MAT_PRE','NAMES_POST')
+
+%save('Matrixes_pre_post','MAT_POST','MAT_PRE','NAMES_POST')
 %%
-plotResultsDistribution(MAT_PRE,MAT_POST,'s')
+plotResultsDistribution(MAT_PRE,MAT_POST,'e')
 
 %Image
 % -b1.1 (1,2)
@@ -104,28 +105,28 @@ for i =1:length(ind)
 end
 
 %sad
-votes_sad = zeros(29,2);
+votes_sad = zeros(length(votes),2);
 votes_sad((votes(:,[1 3])== -1 & votes(:,[2 4])== -1))= 5;
 votes_sad((votes(:,[1 3])== -0.5 & votes(:,[2 4])== -0.5))= 3;
 votes_sad((votes(:,[1 3])== -1 & votes(:,[2 4])== -0.5)|(votes(:,[1 3])== -0.5 & votes(:,[2 4])== -1))= 4;
 votes_sad((votes(:,[1 3])== -1 & votes(:,[2 4])== 0)|(votes(:,[1 3])== 0 & votes(:,[2 4])== -1))= 2;
 votes_sad((votes(:,[1 3])== -0.5 & votes(:,[2 4])== 0)|(votes(:,[1 3])== 0 & votes(:,[2 4])== -0.5))= 1;
 %relax
-votes_relax = zeros(29,2);
+votes_relax = zeros(length(votes),2);
 votes_relax(votes(:,[5 7])== 1 & votes(:,[6 8])== -1)= 5;
 votes_relax(votes(:,[5 7])== 0.5 & votes(:,[6 8])== -0.5)= 3;
 votes_relax((votes(:,[5 7])== 1 & votes(:,[6 8])== -0.5)|(votes(:,[5 7])== 0.5 & votes(:,[6 8])== -1))= 4;
 votes_relax((votes(:,[5 7])== 1 & votes(:,[6 8])== 0)|(votes(:,[5 7])== 0 & votes(:,[6 8])== -1))= 2;
 votes_relax((votes(:,[5 7])== 0.5 & votes(:,[6 8])== 0)|(votes(:,[5 7])== 0 & votes(:,[6 8])== -0.5))= 1;
 %happy
-votes_happy = zeros(29,2);
+votes_happy = zeros(length(votes),2);
 votes_happy((votes(:,[9 11])== 1 & votes(:,[10 12])== 1))= 5;
 votes_happy((votes(:,[9 11])== 0.5 & votes(:,[10 12])== 0.5))= 3;
 votes_happy((votes(:,[9 11])== 1 & votes(:,[10 12])== 0.5)|(votes(:,[9 11])== 0.5 & votes(:,[10 12])== 1))= 4;
 votes_happy((votes(:,[9 11])== 1 & votes(:,[10 12])== 0)|(votes(:,[9 11])== 0 & votes(:,[10 12])== 1))= 2;
 votes_happy((votes(:,[9 11])== 0.5 & votes(:,[10 12])== 0)|(votes(:,[9 11])== 0 & votes(:,[10 12])== 0.5))= 1;
 %fear
-votes_fear = zeros(29,2);
+votes_fear = zeros(length(votes),2);
 votes_fear(votes(:,[13 15])== -1 & votes(:,[14 16])== 1)= 5;
 votes_fear(votes(:,[13 15])== -0.5 & votes(:,[14 16])== 0.5)= 3;
 votes_fear((votes(:,[13 15])== -1 & votes(:,[14 16])== 0.5)|(votes(:,[13 15])== -0.5 & votes(:,[14 16])== 1))= 4;

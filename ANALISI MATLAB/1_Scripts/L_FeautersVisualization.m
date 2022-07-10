@@ -13,7 +13,7 @@ fea = [4 5 6];
 
 
 
-load('Feaut.mat')
+load('Feaut_ML.mat')
 
 
 %% DISPLAY CLUSTERS

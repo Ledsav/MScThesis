@@ -2,7 +2,7 @@
 
 %option can be either depolarized_all_baselines ore not_depolarized
 clear,close,clc
-%option = "not_depolarized";
+% option = "not_depolarized";
 % option = "depolarized_all_baselines";
 % option = 1; %depolarized in respect to baseline 1
  option = 2; %depolarized in respect to baseline 2
@@ -1021,4 +1021,7 @@ end
 
 
 
-%Feaut = {GSR_total, PulsePulse_total, PP_total, PAT_total, POINT_total, F_OO_CLASS, RESP_total};
+Feaut = {'Subjects','GSR_total', 'PulsePulse_total', 'PP_total', 'PAT_total', 'POINT_total', 'F_OO_CLASS', 'RESP_total';
+    subjects,GSR_total, PulsePulse_total, PP_total, PAT_total, POINT_total, F_OO_CLASS, RESP_total};
+
+save('Feaut_ML.mat','Feaut')

@@ -15,7 +15,7 @@ features2={strcat(str,'RR.bal');strcat(str,'Mu');strcat(str,'s2');strcat(str,'Ka
 seconds_division=[120 420 720 1020  1320  1620 1920  2220 2520];
 
 for k=1:size(subjects,2)
-    if isfile (strcat(path,subjects{k},'\',annotation{k}))% && not(isfile(strcat(path,subjects{k},'\feauters\',subjects{k},'_feauters','.mat')))
+    if isfile (strcat(path,subjects{k},'\',annotation{k}))&& not(isfile(strcat(path,subjects{k},'\feauters\',subjects{k},'_feauters','.mat')))
         %data from annotation toolbox
         load(strcat(path,subjects{k},'\',annotation{k}))
         data2=data;

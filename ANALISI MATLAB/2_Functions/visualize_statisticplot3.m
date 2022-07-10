@@ -6,7 +6,7 @@ function visualize_statisticplot3(Feaut,type_of_feaut,vect_feat)
 % alpha --> 4 element vector of alpha for the total features arousal plane
 % alpha2 --> 4 element vector of alpha for the single features arousal plane
 
-
+Feaut = Feaut(:,2:end);
 
 fe= {Feaut{2,type_of_feaut(1)}{3,vect_feat(1)},Feaut{2,type_of_feaut(2)}{3,vect_feat(2)},Feaut{2,type_of_feaut(3)}{3,vect_feat(3)}};
 
